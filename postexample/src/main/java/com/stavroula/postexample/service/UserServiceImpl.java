@@ -10,19 +10,12 @@ import com.stavroula.postexample.repository.UserRepository;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
+	
 	@Autowired
 	UserRepository userRepository;
 	
     private static final AtomicLong counter = new AtomicLong();
 
-	public User findByEmail(String email) {
-		User user = userRepository.findByEmail(email);
-		
-		if (user == null)
-		 return null;
-			
-		return user;
-	}
 	
 	public User saveUser(User user) {
 		String name = null;

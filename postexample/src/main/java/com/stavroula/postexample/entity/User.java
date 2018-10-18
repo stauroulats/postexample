@@ -1,14 +1,24 @@
 package com.stavroula.postexample.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 	
+	@Id
 	private Long id;
 	private String name;
 	private String password;
 	private String email;
 	
+	public User() {
+		super();
+	}
+	
 	
 	public User(String name, String password, String email) {
+		super();
 		this.name = name;
 		this.password = password;
 		this.email = email;

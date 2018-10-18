@@ -1,11 +1,13 @@
 
 package com.stavroula.postexample.service;
 
+import org.springframework.stereotype.Service;
+
 import com.stavroula.postexample.entity.User;
 
+@Service
 public interface UserService{
 	
-	public User findByEmail(String email);
 	
-    public User saveUser(User user);
+    public  User saveUser(User user);
 }
