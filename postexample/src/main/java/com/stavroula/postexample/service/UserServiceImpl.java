@@ -1,7 +1,5 @@
 package com.stavroula.postexample.service;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +12,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-    private static final AtomicLong counter = new AtomicLong();
 
 	
 	public User saveUser(User user) {
@@ -22,10 +19,10 @@ public class UserServiceImpl implements UserService {
 		String password = null;
 		String email = null;
 		User userReply = new User(name,password,email);
-        userReply.setId(counter.incrementAndGet());
 		userReply.setName(user.getName());
 		userReply.setEmail(user.getEmail());
 		userReply.setPassword(user.getPassword());
+		userReply = userRepository.saveAndFlush(user);
 		return userReply;
 	}
 
