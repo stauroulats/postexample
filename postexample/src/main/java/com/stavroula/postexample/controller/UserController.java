@@ -16,7 +16,6 @@ import com.stavroula.postexample.PostexampleApplication;
 import com.stavroula.postexample.entity.User;
 import com.stavroula.postexample.service.UserService;
 
-import ch.qos.logback.classic.Logger;
 
 @RestController
 public class UserController {
@@ -32,7 +31,7 @@ public class UserController {
 		Gson gson = new GsonBuilder().create();
 		User u = gson.fromJson(jsonStr, User.class);
 	
-	logger.info("123", "Creating user", null);
+		logger.info("123", "Creating user", null);
 	
 			User userReply = userService.saveUser(u);
 			return new ResponseEntity<>(userReply, HttpStatus.CREATED);}
