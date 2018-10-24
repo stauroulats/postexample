@@ -9,5 +9,7 @@ import com.stavroula.postexample.entity.User;
 public interface UserService{
 	
 	
-    public  User saveUser(User user);
+    public  User saveUser(String name, String password, String email);
+    public  User login(String email, String password);
+    
 }
