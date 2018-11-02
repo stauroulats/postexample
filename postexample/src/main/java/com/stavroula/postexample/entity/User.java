@@ -3,6 +3,7 @@ package com.stavroula.postexample.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class User {
@@ -14,16 +15,24 @@ public class User {
 	private String password;
 	private String email;
 	
+	@OneToOne
+	private Photo profilePhoto;
+	
+	@OneToOne
+	private Rider rider;
+	
 	public User() {
 		super();
 	}
 	
 	
-	public User(String name, String password, String email) {
+	public User(String name, String password, String email, Photo profilePhoto, Rider rider) {
 		super();
 		this.name = name;
 		this.password = password;
 		this.email = email;
+		this.profilePhoto = profilePhoto;
+		this.rider = rider;
 	}
 
 
@@ -64,6 +73,26 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+	public Photo getProfilePhoto() {
+		return profilePhoto;
+	}
+
+
+	public void setProfilePhoto(Photo profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
+
+
+	public Rider getRider() {
+		return rider;
+	}
+
+
+	public void setRider(Rider rider) {
+		this.rider = rider;
 	}
 	
 	
