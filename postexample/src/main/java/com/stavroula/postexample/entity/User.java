@@ -21,18 +21,20 @@ public class User {
 	@OneToOne
 	private Rider rider;
 	
+	@OneToOne
+	private Driver driver;
+	
 	public User() {
 		super();
 	}
 	
 	
-	public User(String name, String password, String email, Photo profilePhoto, Rider rider) {
+	public User(String name, String password, String email, Photo profilePhoto) {
 		super();
 		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.profilePhoto = profilePhoto;
-		this.rider = rider;
 	}
 
 
@@ -85,17 +87,6 @@ public class User {
 		this.profilePhoto = profilePhoto;
 	}
 
-
-	public Rider getRider() {
-		return rider;
-	}
-
-
-	public void setRider(Rider rider) {
-		this.rider = rider;
-	}
-	
-	
 	
 
 }

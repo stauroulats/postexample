@@ -19,8 +19,8 @@ public class Car {
 	private String manufacture;
 	private String model;
 	
-	@OneToMany(mappedBy="car", cascade=CascadeType.ALL)
-	private Set<Photo> photos = new HashSet<Photo>();	
+	/*@OneToMany(mappedBy="car", cascade=CascadeType.ALL)
+	private Set<Photo> photos = new HashSet<Photo>();	*/
 	
 	@ManyToOne
 	private Driver driver;
@@ -29,11 +29,11 @@ public class Car {
 		super();
 	}
 	
-	public Car(String manufacture, String model, Set<Photo> photos, Driver driver) {
+	public Car(String manufacture, String model,Driver driver) {
 		super();
 		this.manufacture = manufacture;
 		this.model =  model;
-		this.photos = photos;
+		/*this.photos = photos;*/
 		this.driver = driver;
 	}
 
@@ -53,13 +53,13 @@ public class Car {
 		this.model = model;
 	}
 
-	public Set<Photo> getPhotos() {
+	/*public Set<Photo> getPhotos() {
 		return photos;
 	}
 
 	public void setPhotos(Set<Photo> photos) {
 		this.photos = photos;
-	}
+	}*/
 
 	public Driver getDriver() {
 		return driver;
