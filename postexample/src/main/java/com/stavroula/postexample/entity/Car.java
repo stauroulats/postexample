@@ -23,18 +23,18 @@ public class Car {
 	private Set<Photo> photos = new HashSet<Photo>();	*/
 	
 	@ManyToOne
-	private Driver driver;
+	private Driver ownerDriver;
 	
 	public Car() {
 		super();
 	}
 	
-	public Car(String manufacture, String model,Driver driver) {
+	public Car(String manufacture, String model,Driver ownerDriver) {
 		super();
 		this.manufacture = manufacture;
 		this.model =  model;
 		/*this.photos = photos;*/
-		this.driver = driver;
+		this.ownerDriver = ownerDriver;
 	}
 
 	public String getManufacture() {
@@ -61,12 +61,12 @@ public class Car {
 		this.photos = photos;
 	}*/
 
-	public Driver getDriver() {
-		return driver;
+	public Driver getOwnerDriver() {
+		return ownerDriver;
 	}
 
-	public void setDriver(Driver driver) {
-		this.driver = driver;
+	public void setOwnerDriver(Driver ownerDriver) {
+		this.ownerDriver = ownerDriver;
 	}
 	
 	
