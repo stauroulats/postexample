@@ -19,16 +19,12 @@ public class CarServiceImpl {
 		return carRepository.findAll();
 	}
 	
-	public List<Car> getAllCarsByDriver(Long driverId){
-		return carRepository.findByDriver(driverId);
 	
-	}
-	
-	public Car saveCar(String jsonManufacture, String jsonModel, Driver jsonDriver) {
+	public Car saveCar(String manufacture, String model, Driver driver) {
 		Car carReply = new Car();
-		carReply.setManufacture(jsonManufacture);
-		carReply.setModel(jsonModel);
-		carReply.setOwnerDriver(jsonDriver);
+		carReply.setManufacture(manufacture);
+		carReply.setModel(model);
+		carReply.setOwnerDriver(driver);
 		carReply = carRepository.saveAndFlush(carReply);
 		return carReply;
 		
