@@ -1,11 +1,16 @@
 package com.stavroula.postexample.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "user")
 public class User {
 	
 	@Id
@@ -18,10 +23,16 @@ public class User {
 	@OneToOne
 	private Photo profilePhoto;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "user",
+            optional = true)
 	private Rider rider;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "user",
+            optional = true)
 	private Driver driver;
 	
 	public User() {
@@ -29,12 +40,11 @@ public class User {
 	}
 	
 	
-	public User(String name, String password, String email, Photo profilePhoto) {
+	public User(String name, String password, String email) {
 		super();
 		this.name = name;
 		this.password = password;
 		this.email = email;
-		this.profilePhoto = profilePhoto;
 	}
 
 
@@ -85,6 +95,26 @@ public class User {
 
 	public void setProfilePhoto(Photo profilePhoto) {
 		this.profilePhoto = profilePhoto;
+	}
+
+
+	public Rider getRider() {
+		return rider;
+	}
+
+
+	public void setRider(Rider rider) {
+		this.rider = rider;
+	}
+
+
+	public Driver getDriver() {
+		return driver;
+	}
+
+
+	public void setDriver(Driver driver) {
+		this.driver = driver;
 	}
 
 	

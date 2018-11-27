@@ -21,8 +21,10 @@ public class DriverServiceImpl implements DriverService {
 		return driverRepository.findAll();
 	}
 	
-	public Optional<Driver> getDriver(Long driverId) {
-		return driverRepository.findById(driverId);
+	public Driver getDriver(Long driverId) {
+		Optional<Driver> optionalEntity =  driverRepository.findById(driverId);
+		Driver driver = optionalEntity.isPresent() ? optionalEntity.get():null;
+		return driver;
 	}
 
 }

@@ -5,11 +5,17 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Table(name = "rider")
 @Entity
 public class Rider {
 	
@@ -17,7 +23,9 @@ public class Rider {
 	@GeneratedValue
 	private Long id;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+	@JsonIgnore
 	private User user;
 	
 	@OneToMany(mappedBy="rider", cascade=CascadeType.ALL)
@@ -29,7 +37,7 @@ public class Rider {
 	@OneToMany(mappedBy="rider", cascade=CascadeType.ALL)
 	private Set<Appointment> appointments = new HashSet<Appointment>();
 	
-	@OneToOne(mappedBy="rider", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="rider", cascade=CascadeType.ALL)
 	private Set<CreditCard> creditCards = new HashSet<CreditCard>();
 	
 	public Rider() {
@@ -85,6 +93,15 @@ public class Rider {
 		this.creditCards = creditCards;
 	}
 	
+	public int totalReviews(){
+		int countStars = 0;
+		for (Trip t : trips) {// In case of no stars?
+		countStars = t.getRiderReview().getStars();
+		countStars++;
+		}
+		int totalStars = countStars/trips.size();
+		return totalStars;
+	}
 	
 
 }

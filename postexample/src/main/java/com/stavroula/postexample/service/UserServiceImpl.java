@@ -1,8 +1,11 @@
 package com.stavroula.postexample.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.stavroula.postexample.entity.Driver;
 import com.stavroula.postexample.entity.User;
 import com.stavroula.postexample.repository.UserRepository;
 
@@ -12,7 +15,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
+	}
 	
 	public User saveUser(String jsonName, String jsonPassword, String jsonEmail) {
 		String name = null;

@@ -18,18 +18,15 @@ public class RiderReview {
 	@OneToOne
 	private Trip trip;
 	
-	@OneToOne
-	private RiderRequest riderRequest;
 	
 	public RiderReview() {
 		super();
 	}
 	
-	public RiderReview(String description, Integer stars, Trip trip, RiderRequest riderRequest) {
+	public RiderReview(String description, Integer stars, Trip trip) {
 		this.description = description;
 		this.stars = stars;
 		this.trip = trip;
-		this.riderRequest = riderRequest;
 	}
 
 	public String getDescription() {

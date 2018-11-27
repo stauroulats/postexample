@@ -1,24 +1,35 @@
 package com.stavroula.postexample.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.stavroula.postexample.entity.Driver;
 import com.stavroula.postexample.entity.User;
 import com.stavroula.postexample.service.UserService;
 
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 	
 		  
 	@Autowired
 	UserService userService;
+	
+	@RequestMapping(value = "" , method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<List<User>> getUsers(){
+		List<User> users = userService.getAllUsers();
+		return ResponseEntity.accepted().body(users);
+	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<User> createUser(@RequestBody String jsonStr){

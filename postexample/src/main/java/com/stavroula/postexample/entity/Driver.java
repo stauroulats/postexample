@@ -5,10 +5,14 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Driver {
@@ -17,16 +21,18 @@ public class Driver {
 	@GeneratedValue
 	private Long id;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
+	@JsonIgnore
 	private User user;
 	
 	@OneToMany(mappedBy="driver",cascade=CascadeType.ALL)
 	private Set<Trip> trips = new HashSet<Trip>();
 	
-	@OneToMany(mappedBy="drider", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="driver", cascade=CascadeType.ALL)
 	private Set<RiderRequest> riderRequests = new HashSet<RiderRequest>();
 	
-	@OneToMany(mappedBy="drider", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="driver", cascade=CascadeType.ALL)
 	private Set<Appointment> appointments = new HashSet<Appointment>();
 	
 	@OneToMany(mappedBy="driver", cascade=CascadeType.ALL)
@@ -36,9 +42,9 @@ public class Driver {
 		super();
 	}
 	
-	public Driver(User user, Set<Trip> trips, Set<RiderRequest> riderRequests, 
+	public Driver(Set<Trip> trips, Set<RiderRequest> riderRequests, 
 			Set<Appointment> appointments ,Set<Car> cars) {
-		this.user = user;
+		//this.user = user;
 		this.trips = trips;
 		this.riderRequests = riderRequests;
 		this.appointments = appointments;
@@ -85,5 +91,14 @@ public class Driver {
 		this.cars = cars;
 	}
 	
+	public int totalReviews(){
+		int countStars = 0;
+		for (Trip t : trips) {
+		countStars = t.getDriverReview().getStars();
+		countStars++;
+		}
+		int totalStars = countStars/trips.size();
+		return totalStars;
+	}
 	
 }

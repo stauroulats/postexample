@@ -1,6 +1,5 @@
 package com.stavroula.postexample.entity;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,21 +19,21 @@ public class Car {
 	private String model;
 	
 	/*@OneToMany(mappedBy="car", cascade=CascadeType.ALL)
-	private Set<Photo> photos = new HashSet<Photo>();	*/
+	private Set<Photo> photos = new HashSet<Photo>();*/
 	
 	@ManyToOne
-	private Driver ownerDriver;
+	private  Driver driver;
 	
 	public Car() {
 		super();
 	}
 	
-	public Car(String manufacture, String model,Driver ownerDriver) {
+	public Car(String manufacture, String model, Driver driver) {
 		super();
 		this.manufacture = manufacture;
 		this.model =  model;
 		/*this.photos = photos;*/
-		this.ownerDriver = ownerDriver;
+		this.driver = driver;
 	}
 
 	public String getManufacture() {
@@ -62,11 +61,11 @@ public class Car {
 	}*/
 
 	public Driver getOwnerDriver() {
-		return ownerDriver;
+		return driver;
 	}
 
-	public void setOwnerDriver(Driver ownerDriver) {
-		this.ownerDriver = ownerDriver;
+	public void setOwnerDriver(Driver driver) {
+		this.driver = driver;
 	}
 	
 	
