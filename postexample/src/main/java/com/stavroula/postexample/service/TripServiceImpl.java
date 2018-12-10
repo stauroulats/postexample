@@ -13,9 +13,9 @@ import com.stavroula.postexample.entity.Driver;
 import com.stavroula.postexample.entity.DriverReview;
 import com.stavroula.postexample.entity.Rider;
 import com.stavroula.postexample.entity.RiderReview;
+import com.stavroula.postexample.entity.Status;
 import com.stavroula.postexample.entity.Trip;
 import com.stavroula.postexample.entity.Trip.PaymentMethod;
-import com.stavroula.postexample.entity.Trip.Status;
 import com.stavroula.postexample.repository.TripRepository;
 
 @Service("tripService")

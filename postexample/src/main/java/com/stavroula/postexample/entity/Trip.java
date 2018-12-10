@@ -18,10 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Trip {
-
-	public enum Status{
-		inProgress,completed
-	}
 	
 	public enum PaymentMethod{  //Gia na iparxei sto TripHistory o tropos plirwmis
 		cash,creditCard

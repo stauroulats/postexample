@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.stavroula.postexample.entity.Driver;
 import com.stavroula.postexample.entity.Rider;
+import com.stavroula.postexample.entity.Status;
 import com.stavroula.postexample.entity.TripRequest;
-import com.stavroula.postexample.entity.TripRequest.Status;
 import com.stavroula.postexample.repository.TripRequestRepository;
 
 

@@ -1,15 +1,11 @@
 package com.stavroula.postexample.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.stavroula.postexample.entity.Car;
-import com.stavroula.postexample.entity.CreditCard;
 import com.stavroula.postexample.entity.Driver;
 import com.stavroula.postexample.entity.Rider;
 import com.stavroula.postexample.entity.User;

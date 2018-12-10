@@ -14,14 +14,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.stavroula.postexample.entity.TripRequest.Status;
 
 @Entity
 public class Appointment {
-	
-	public enum Status{
-		pending,scheduled,cancelled,completed
-	}
 	
 	@Id
 	@GeneratedValue

@@ -5,12 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.stavroula.postexample.entity.Driver;
-import com.stavroula.postexample.entity.Rider;
-import com.stavroula.postexample.entity.TripRequest;
-import com.stavroula.postexample.entity.TripRequest.Status;
 import com.stavroula.postexample.entity.User;
-import com.stavroula.postexample.repository.RiderRepository;
 import com.stavroula.postexample.repository.TripRequestRepository;
 import com.stavroula.postexample.repository.UserRepository;
 import com.stavroula.postexample.service.DbSeedService;

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.stavroula.postexample.entity.Appointment;
 import com.stavroula.postexample.entity.Driver;
-import com.stavroula.postexample.entity.Appointment.Status;
 import com.stavroula.postexample.entity.Rider;
+import com.stavroula.postexample.entity.Status;
 import com.stavroula.postexample.repository.AppointmentRepository;
 
 @Service("appointmentService")
@@ -53,9 +53,9 @@ public class AppointmentServiceImpl implements AppointmentService{
 	}
 	
 	public Appointment saveAppointment(Driver driver,Appointment appointment) {
-		if( (appointment.getStatus() == com.stavroula.postexample.entity.Appointment.Status.pending) ){
+		if( (appointment.getStatus() == Status.pending) ){
 			appointment.setDriver(driver);
-			appointment.setStatus(com.stavroula.postexample.entity.Appointment.Status.scheduled);
+			appointment.setStatus(Status.scheduled);
 			appointmentRepository.saveAndFlush(appointment);
 		}
 		return appointment;

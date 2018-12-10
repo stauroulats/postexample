@@ -18,10 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class TripRequest {
 	
-	public enum Status{
-		approved,pending,cancelled
-	}
-	
 	@Id
 	@GeneratedValue
 	private Long id;
