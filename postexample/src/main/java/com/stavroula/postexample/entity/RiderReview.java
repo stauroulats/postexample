@@ -1,10 +1,14 @@
 package com.stavroula.postexample.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class RiderReview {
@@ -15,9 +19,10 @@ public class RiderReview {
 	private String description;
 	private Integer stars;
 	
-	@OneToOne
+	@OneToOne (fetch = FetchType.LAZY,
+    cascade =  CascadeType.ALL,
+    mappedBy = "riderReview")
 	private Trip trip;
-	
 	
 	public RiderReview() {
 		super();
@@ -27,6 +32,14 @@ public class RiderReview {
 		this.description = description;
 		this.stars = stars;
 		this.trip = trip;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getDescription() {

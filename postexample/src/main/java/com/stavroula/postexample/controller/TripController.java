@@ -24,17 +24,10 @@ public class TripController {
 		return ResponseEntity.accepted().body(trip);
 	}
 	
-	@RequestMapping(value = "/{tripId}/payment/{cash}" , method = RequestMethod.POST)
-	public ResponseEntity<Trip> paymentC(@PathVariable Long tripId, @PathVariable String cash){
+	@RequestMapping(value = "/{tripId}/payment/{paymentType}" , method = RequestMethod.POST)
+	public ResponseEntity<Trip> paymentC(@PathVariable Long tripId, @PathVariable ("paymentType") String paymentType){
 		Trip trip = tripService.getTrip(tripId);
-		trip = tripService.payment(trip,cash);
-		return ResponseEntity.accepted().body(trip);
-	}
-	
-	@RequestMapping(value = "/{tripId}/payment/{creditCard}" , method = RequestMethod.POST)
-	public ResponseEntity<Trip> paymentCd(@PathVariable Long tripId, @PathVariable String creditCard){
-		Trip trip = tripService.getTrip(tripId);
-		trip = tripService.payment(trip,creditCard);
+		trip = tripService.payment(trip,paymentType);
 		return ResponseEntity.accepted().body(trip);
 	}
 

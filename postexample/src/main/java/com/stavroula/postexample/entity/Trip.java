@@ -1,16 +1,20 @@
 package com.stavroula.postexample.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import com.stavroula.postexample.entity.RiderRequest.Status;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Trip {
@@ -26,15 +30,12 @@ public class Trip {
 	@Id
 	@GeneratedValue
 	private Long id;
-	//private Date date;
-	private String pickUpPoint;
-	private String destination;
+	private Date date;
 	//private int stops;
 	//private int waitTime;
 	//private int timeTaken;
-	private int fare;
+	//private int fare;
 	private Long rideDistance;
-	//enum creditCard/cash
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
@@ -42,63 +43,62 @@ public class Trip {
 	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="riderId")
+	@JsonBackReference
 	private Rider rider;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="driverId")
+	@JsonBackReference
 	private Driver driver;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "riderReview_id")
+	@JsonIgnore
 	private RiderReview riderReview;
 	
-	@OneToOne 
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driverReview_id")
+	@JsonIgnore
 	private DriverReview driverReview;
 	
-	@OneToOne
-	private RiderRequest riderRequest;
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tripRequest_id")
+	@JsonIgnore
+	private TripRequest tripRequest;
+	
 	
 	public Trip() {
 		super();
 	}
 	
-	public Trip(String pickUpPoint, String destination, int fare, Long rideDistance, Rider rider, 
-			Driver driver, RiderReview riderReview, DriverReview driverReview) {
+	public Trip(Long rideDistance,RiderReview riderReview, DriverReview driverReview) {
 		super();
-		this.pickUpPoint = pickUpPoint;
-		this.destination = destination;
-		this.rider = rider;
-		this.driver = driver;
+		//this.rider = rider;
+		//this.driver = driver;
 		this.riderReview = riderReview;
 		this.driverReview = driverReview;
 	}
+	
+	
 
-	public String getPickUpPoint() {
-		return pickUpPoint;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setPickUpPoint(String pickUpPoint) {
-		this.pickUpPoint = pickUpPoint;
-	}
-
-	public String getDestination() {
-		return destination;
-	}
-
-	public void setDestination(String destination) {
-		this.destination = destination;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
-	public int getFare() {
+	/*public int getFare() {
 		return fare;
 	}
 
 	public void setFare(int fare) {
 		this.fare = fare;
-	}
+	}*/
 
-	public Rider getRider() {
-		return rider;
-	}
 	
 	public Long getRideDistance() {
 		return rideDistance;
@@ -116,11 +116,6 @@ public class Trip {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-	public void setRider(Rider rider) {
-		this.rider = rider;
-	}
-
 	
 	public PaymentMethod getPaymentMethod() {
 		return paymentMethod;
@@ -129,7 +124,15 @@ public class Trip {
 	public void setPaymentMethod(PaymentMethod paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
+	
+	public Rider getRider() {
+		return rider;
+	}
 
+	public void setRider(Rider rider) {
+		this.rider = rider;
+	}
+	
 	public Driver getDriver() {
 		return driver;
 	}
@@ -154,12 +157,12 @@ public class Trip {
 		this.driverReview = driverReview;
 	}
 
-	public RiderRequest getRiderRequest() {
-		return riderRequest;
+	public TripRequest getTripRequest() {
+		return tripRequest;
 	}
 
-	public void setRiderRequest(RiderRequest riderRequest) {
-		this.riderRequest = riderRequest;
+	public void setTripRequest(TripRequest tripRequest) {
+		this.tripRequest = tripRequest;
 	}
 	
 	public double totalfare() {
@@ -167,5 +170,7 @@ public class Trip {
 		double totalfare = (this.rideDistance*charge);
 		return totalfare;
 	}
+	
+	
 	
 }

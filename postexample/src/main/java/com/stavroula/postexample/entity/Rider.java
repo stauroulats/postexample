@@ -21,42 +21,53 @@ public class Rider {
 	
 	@Id
 	@GeneratedValue
+	
 	private Long id;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-	@JsonIgnore
+    @JoinColumn(name = "user_id",referencedColumnName = "id",nullable = false)
 	private User user;
 	
 	@OneToMany(mappedBy="rider", cascade=CascadeType.ALL)
 	private Set<Trip> trips = new HashSet<Trip>();
 	
-	@OneToMany(mappedBy="rider", cascade=CascadeType.ALL)
-	private Set<RiderRequest> riderRequests = new HashSet<RiderRequest>();
+	@OneToMany(mappedBy="rider",orphanRemoval = true, cascade=CascadeType.ALL)
+	private Set<TripRequest> tripRequests = new HashSet<TripRequest>();
 	
 	@OneToMany(mappedBy="rider", cascade=CascadeType.ALL)
 	private Set<Appointment> appointments = new HashSet<Appointment>();
 	
-	@OneToMany(mappedBy="rider", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="rider", orphanRemoval = true, cascade=CascadeType.ALL)
 	private Set<CreditCard> creditCards = new HashSet<CreditCard>();
 	
 	public Rider() {
 		super();
 	}
 	
-	public Rider(User user, Set<Trip> trips, Set<RiderRequest> riderRequests, 
+	public Rider( Set<Trip> trips, Set<TripRequest> tripRequests, 
 			Set<Appointment> appointments ,Set<CreditCard> creditCards) {
-		this.user = user;
+		super();
+		//this.user = user;
 		this.trips = trips;
-		this.riderRequests = riderRequests;
+		this.tripRequests = tripRequests;
 		this.appointments = appointments;
 		this.creditCards = creditCards;
 	}
+	
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
 	public User getUser() {
 		return user;
 	}
-
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -69,12 +80,12 @@ public class Rider {
 		this.trips = trips;
 	}
 
-	public Set<RiderRequest> getRiderRequests() {
-		return riderRequests;
+	public Set<TripRequest> getTripRequests() {
+		return tripRequests;
 	}
 
-	public void setRiderRequests(Set<RiderRequest> riderRequests) {
-		this.riderRequests = riderRequests;
+	public void setTripRequests(Set<TripRequest> tripRequests) {
+		this.tripRequests = tripRequests;
 	}
 
 	public Set<Appointment> getAppointments() {
@@ -85,13 +96,18 @@ public class Rider {
 		this.appointments = appointments;
 	}
 
-	public Set<CreditCard> getCreditCard() {
+	public Set<CreditCard> getCreditCards() {
 		return creditCards;
 	}
 
 	public void setCreditCards(Set<CreditCard> creditCards) {
 		this.creditCards = creditCards;
 	}
+
+	public void addCreditCard(CreditCard creditCard) {
+        this.creditCards.add(creditCard);
+        creditCard.setRider(this);
+    }
 	
 	public int totalReviews(){
 		int countStars = 0;

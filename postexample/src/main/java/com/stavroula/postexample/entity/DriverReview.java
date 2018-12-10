@@ -1,6 +1,8 @@
 package com.stavroula.postexample.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -14,7 +16,10 @@ public class DriverReview {
 	private String description;
 	private Integer stars;
 	
-	@OneToOne
+	
+	@OneToOne (fetch = FetchType.LAZY,
+    cascade =  CascadeType.ALL,
+    mappedBy = "driverReview")
 	private Trip trip;
 	
 	public DriverReview() {
@@ -25,6 +30,14 @@ public class DriverReview {
 		this.description = description;
 		this.stars = stars;
 		this.trip = trip;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getDescription() {

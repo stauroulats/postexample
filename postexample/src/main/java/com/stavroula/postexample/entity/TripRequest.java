@@ -1,17 +1,22 @@
 package com.stavroula.postexample.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-public class RiderRequest {
+public class TripRequest {
 	
 	public enum Status{
 		approved,pending,cancelled
@@ -27,21 +32,33 @@ public class RiderRequest {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="riderId")
+	@JsonBackReference
 	private Rider rider;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="driverId")
+	@JsonBackReference
 	private Driver driver;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY,
+    cascade =  CascadeType.ALL,
+    mappedBy = "tripRequest",
+    optional = true)
 	private Trip trip;
 	
-	public RiderRequest() {
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_id")
+	@JsonIgnore
+	private Chat chat;
+	
+	public TripRequest() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
 		
-	public RiderRequest(String pickUpPoint, String destination, Status status,Long rideDistance, Rider rider, Driver driver) {
+	public TripRequest(String pickUpPoint, String destination, Status status,Long rideDistance, Rider rider, Driver driver) {
 		super();
 		this.pickUpPoint = pickUpPoint;
 		this.destination = destination;
@@ -49,6 +66,15 @@ public class RiderRequest {
 		this.rideDistance = rideDistance;
 		this.rider = rider;
 		this.driver = driver;
+	}
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getPickUpPoint() {
@@ -75,8 +101,6 @@ public class RiderRequest {
 		this.status = status;
 	}
 	
-	
-
 	public Long getRideDistance() {
 		return rideDistance;
 	}
@@ -108,6 +132,10 @@ public class RiderRequest {
 	public void setTrip(Trip trip) {
 		this.trip = trip;
 	}
-
-
+	
+	public double totalfare() {
+		double charge = 0.74;
+		double totalfare = (this.rideDistance*charge);
+		return totalfare;
+	}
 }

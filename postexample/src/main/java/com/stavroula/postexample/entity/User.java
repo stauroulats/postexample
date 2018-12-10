@@ -20,8 +20,10 @@ public class User {
 	private String password;
 	private String email;
 	
-	@OneToOne
-	private Photo profilePhoto;
+	
+	@OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "photo_id")
+	private Photo photo;
 	
 	@OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
@@ -88,13 +90,13 @@ public class User {
 	}
 
 
-	public Photo getProfilePhoto() {
-		return profilePhoto;
+	public Photo getPhoto() {
+		return photo;
 	}
 
 
-	public void setProfilePhoto(Photo profilePhoto) {
-		this.profilePhoto = profilePhoto;
+	public void setPhoto(Photo photo) {
+		this.photo = photo;
 	}
 
 
@@ -116,7 +118,5 @@ public class User {
 	public void setDriver(Driver driver) {
 		this.driver = driver;
 	}
-
-	
 
 }

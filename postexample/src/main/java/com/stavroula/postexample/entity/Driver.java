@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name = "driver")
 public class Driver {
 	
 	@Id
@@ -30,25 +32,39 @@ public class Driver {
 	private Set<Trip> trips = new HashSet<Trip>();
 	
 	@OneToMany(mappedBy="driver", cascade=CascadeType.ALL)
-	private Set<RiderRequest> riderRequests = new HashSet<RiderRequest>();
+	private Set<TripRequest> tripRequests = new HashSet<TripRequest>();
 	
 	@OneToMany(mappedBy="driver", cascade=CascadeType.ALL)
 	private Set<Appointment> appointments = new HashSet<Appointment>();
 	
-	@OneToMany(mappedBy="driver", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="ownerDriver", orphanRemoval = true, cascade=CascadeType.ALL)
 	private Set<Car> cars = new HashSet<Car>();
+	
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "car_id")
+	private Car currentCar;
 
 	public Driver() {
 		super();
 	}
 	
-	public Driver(Set<Trip> trips, Set<RiderRequest> riderRequests, 
+	public Driver(Set<Trip> trips, Set<TripRequest> tripRequests, 
 			Set<Appointment> appointments ,Set<Car> cars) {
+		super();
 		//this.user = user;
 		this.trips = trips;
-		this.riderRequests = riderRequests;
+		this.tripRequests = tripRequests;
 		this.appointments = appointments;
 		this.cars = cars;
+	}
+
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public User getUser() {
@@ -67,12 +83,12 @@ public class Driver {
 		this.trips = trips;
 	}
 
-	public Set<RiderRequest> getRiderRequests() {
-		return riderRequests;
+	public Set<TripRequest> getTripRequests() {
+		return tripRequests;
 	}
 
-	public void setRiderRequests(Set<RiderRequest> riderRequests) {
-		this.riderRequests = riderRequests;
+	public void setTripRequests(Set<TripRequest> tripRequests) {
+		this.tripRequests = tripRequests;
 	}
 
 	public Set<Appointment> getAppointments() {
@@ -91,6 +107,19 @@ public class Driver {
 		this.cars = cars;
 	}
 	
+	public void addCar(Car car) {
+        this.cars.add(car);
+        car.setOwnerDriver(this);
+    }
+	
+	public Car getCurrentCar() {
+		return currentCar;
+	}
+
+	public void setCurrentCar(Car currentCar) {
+		this.currentCar = currentCar;
+	}
+
 	public int totalReviews(){
 		int countStars = 0;
 		for (Trip t : trips) {

@@ -8,7 +8,7 @@ import com.stavroula.postexample.entity.Trip;
 import com.stavroula.postexample.repository.RiderReviewRepository;
 
 @Service("riderReviewService")
-public class RiderReviewServiceImpl {
+public class RiderReviewServiceImpl implements RiderReviewService {
 	
 	@Autowired
 	RiderReviewRepository riderReviewRepository;
